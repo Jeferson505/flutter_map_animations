@@ -208,13 +208,19 @@ class AnimatedMapController {
         rotateTween,
         animationId,
       ) {
-        final result = mapController.moveAndRotate(
+        final moveResult = mapController.move(
           latLngTween.evaluate(animation),
           zoomTween.evaluate(animation),
+          offset: offsetTween.evaluate(animation),
+          id: animationId.id,
+        );
+
+        final rotationResult = mapController.rotate(
           rotateTween.evaluate(animation),
           id: animationId.id,
         );
-        return result.moveSuccess || result.rotateSuccess;
+
+        return moveResult || rotationResult;
       };
     } else if (hasMovement) {
       return (
